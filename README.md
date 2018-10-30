@@ -1,2 +1,2 @@
 "# dronov_django" 
-"# dronov_django" 
+My study of Dronov Django Book
