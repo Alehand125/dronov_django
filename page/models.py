@@ -1,8 +1,6 @@
 from django.db import models
-from django.db.models import Q
 
 
-# Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
@@ -18,9 +16,9 @@ class Category(models.Model):
 class Good(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Название")
     in_stock = models.BooleanField(default=True, db_index=True, verbose_name="В наличии")
-    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
-    price = models.FloatField(default=0)
-    description = models.TextField(default=" ")
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL,verbose_name="Категория")
+    price = models.FloatField(default=0,verbose_name="Цена за единицу")
+    description = models.TextField(default=" ",verbose_name="Описание товара")
 
     class Meta:
         ordering = ["-price", "name"]
@@ -51,4 +49,3 @@ class BlogArticle(models.Model):
     title = models.CharField(max_length=100, unique_for_date="pubdate")
     pubdate = models.DateField()
     update = models.DateTimeField(auto_now=True)
-
