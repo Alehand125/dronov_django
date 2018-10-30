@@ -14,7 +14,8 @@ urlpatterns = patterns("",
 
                        # третий вариант
 
-                       url(r'^(?:\?id=(?P<id>\d+)/)?$', views.good, name="index"),
-                       url(r'^good/(?P<id>\d+)/$', views.good, name="good"),
+                       # url(r'^(?:\?id=(?P<cat_id>\d+)/)?$', views.index, name="index"),
+                       url(r'^(?:(?P<cat_id>\d+)/)?$', views.index, name="index"),
+                       url(r'^good/(?P<good_id>\d+)/$', views.good, name="good"),
 
                        )
