@@ -4,19 +4,16 @@ from .models import Category, Good
 
 
 def index(request, cat_id):
-    try:
+    if cat_id == None:
+        cat = Category.objects.first()
+    else:
         cat = Category.objects.get(pk=cat_id)
-    except Category.DoesNotExist:
-        raise Http404
-    # if cat_id == None:
-    #     cat = Category.objects.first()
-    # else:
-    Category.objects.get(pk=cat_id)
+    cats = Category.objects.all().order_by("name")
     goods = Good.objects.filter(category=cat).order_by("name")
-    s = str(cat_id) + " Категория: " + cat.name + "<br> <br>"
+    s = " Категория: " + cat.name + "<br> <br>"
     for good in goods:
-        s += "(" + str(good.pk) + ") " + good.name + "<br>"
-    return HttpResponse(s)
+        s = s + good.name + "  " + str(good.price) + "<br>"
+    return render(request, "index.html", {"category": cat, "cats": cats, "goods": goods})
 
 
 def good(request, good_id):
