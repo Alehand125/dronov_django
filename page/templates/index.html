@@ -25,6 +25,12 @@
     {% for good in goods %}
     <tr>
         <td><a href="/goods/good/{{ good.id }}/"> {{good.name}}</a></td>
+        <td> {% if good.in_stock %}
+            +
+            {% else %}
+            - Нет в наличии
+            {%endif%}
+        </td>
     </tr>
     {% endfor %}
 </table>
