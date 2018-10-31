@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-{% load staticfiles %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link type="text/css" href="{%static "main.css" %}" rel="stylesheet">
-    <title>iZюм</title>
+{% extends "base.html" %}
+{% block title %} {{category.name}} {%endblock%}
 
-</head>
-<body>
-<div id="header">
-    <h1>Список товаров</h1>
-</div>
-<div id="leftmenu">
-
-
-    <ul>
-        {% for cat in cats %}
-        <li><a href="/goods/{{ cat.id }}/"> {{cat.name}} </a></li>
-        {%endfor %}
-    </ul>
-</div>
-
-<div id="main">
+{% block main %}
     <h2>{{category.name}}</h2>
     <table>
         <tr>
@@ -40,8 +20,5 @@
         {% endfor %}
     </table>
 </div>
-<div id="footer">
-    <p>Все права защищены</p>
-</div>
-</body>
-</html>
+
+{%endblock %}
