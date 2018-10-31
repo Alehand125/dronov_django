@@ -17,11 +17,13 @@ def index(request, cat_id):
 
 
 def good(request, good_id):
+    cats = Category.objects.all().order_by("name")
     try:
         good = Good.objects.get(pk=good_id)
     except Good.DoesNotExist:
         raise Http404
+
     # s = good.name + "<br> <br>" + good.category.name + "<br><br>" + good.description
     # if not good.in_stock:
     #     s += "<br><br>" + " Нет в наличии!"
-    return render(request, "good.html", {"good": good})
+    return render(request, "good.html", {"good": good, "cats": cats})
