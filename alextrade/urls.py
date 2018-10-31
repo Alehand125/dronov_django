@@ -10,4 +10,6 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^goods/', include("page.urls")),
+    url(r'^blog/', include("blog.urls")),
+
 ]
