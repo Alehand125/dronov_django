@@ -8,12 +8,12 @@ def index(request, cat_id):
         cat = Category.objects.get(pk=cat_id)
     except Category.DoesNotExist:
         raise Http404
-    if cat_id == None:
-        cat = Category.objects.first()
-    else:
-        Category.objects.get(pk=cat_id)
+    # if cat_id == None:
+    #     cat = Category.objects.first()
+    # else:
+    Category.objects.get(pk=cat_id)
     goods = Good.objects.filter(category=cat).order_by("name")
-    s = "Категория: " + cat.name + "<br> <br>"
+    s = str(cat_id) + " Категория: " + cat.name + "<br> <br>"
     for good in goods:
         s += "(" + str(good.pk) + ") " + good.name + "<br>"
     return HttpResponse(s)
