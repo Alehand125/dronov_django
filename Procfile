@@ -1,0 +1,1 @@
+web: gunicorn alextrade.wsgi --log-file -
