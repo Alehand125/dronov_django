@@ -7,6 +7,10 @@
     <p class="category">Категория: {{good.category.name}}</p>
     <p>{{ good.description|linebreaksbr}}</p>
     <p>{% if not good.in_stock %}<strong> Нет в наличии</strong> {% endif %}</p>
-    <p class="not-in-stock"><a href="/goods/{{good.category.id }}/">Назад</a></p>
+    <p class="not-in-stock">
+        <!--<a href="/goods/{{good.category.id }}/">Назад-->
+        <a href="{% url "index" cat_id=good.category.id %}?page={{pn}}">Назад
+        </a>
+    </p>
 
 {%endblock%}

@@ -44,6 +44,8 @@ INSTALLED_APPS = (
 
 )
 
+
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,7 +62,7 @@ ROOT_URLCONF = 'alextrade.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')], #добавил путь чтобы все шаблоны были в корне проекта
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,6 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'alextrade.wsgi.application'
 
+STATIC_ROOT = "/static/"
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
