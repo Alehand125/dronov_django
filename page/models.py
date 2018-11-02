@@ -16,9 +16,9 @@ class Category(models.Model):
 class Good(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Название")
     in_stock = models.BooleanField(default=True, db_index=True, verbose_name="В наличии")
-    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL,verbose_name="Категория")
-    price = models.FloatField(default=0,verbose_name="Цена за единицу")
-    description = models.TextField(default=" ",verbose_name="Описание товара")
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Категория")
+    price = models.FloatField(default=0, verbose_name="Цена за единицу")
+    description = models.TextField(default=" ", verbose_name="Описание товара")
 
     class Meta:
         ordering = ["-price", "name"]
