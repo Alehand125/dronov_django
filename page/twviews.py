@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, InvalidPage
 from .models import Category, Good
 from django.http import Http404
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 
 # class GoodListView(TemplateView):
@@ -42,8 +43,11 @@ class GoodListView(ListView):
     def get_queryset(self):
         return Good.objects.filter(category=self.cat).order_by("name")
 
-class GoodDetailView(TemplateView):
+# class GoodDetailView(TemplateView):
+class GoodDetailView(DetailView):
     template_name = "good.html"
+    model = Good
+    pk_url_kwarg = "good_id"
 
     def get_context_data(self, **kwargs):
         context = super(GoodDetailView, self).get_context_data(**kwargs)
@@ -52,8 +56,8 @@ class GoodDetailView(TemplateView):
         except KeyError:
             context["pn"] = 1
         context["cats"] = Category.objects.order_by("name")
-        try:
-            context["good"] = Good.objects.get(pk=kwargs["good_id"])
-        except Good.DoesNotExist:
-            raise Http404
+        # try:
+        #     context["good"] = Good.objects.get(pk=kwargs["good_id"])
+        # except Good.DoesNotExist:
+        #     raise Http404
         return context
