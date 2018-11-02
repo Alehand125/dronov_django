@@ -8,40 +8,40 @@
             <th>Название</th>
             <th>Есть в наличии</th>
         </tr>
-        {% for good in goods %}
+        {% for good in object_list %}
         <tr>
             <td>
-                <a href="{% url "good" good_id=good.id %}?page={{goods.number}}"> {{good.name}}
+                <a href="{% url "good" good_id=good.id %}?page={{page_obj.number}}"> {{good.name}}
                 <!--<a href="{% url "good" good_id=good.id %}?page={{goods.number}}">-->
                 </a>
             </td>
-            <td> {% if good.in_stock %}+
-                {% else %}
-                - Нет в наличии
-                {%endif%}
-            </td>
+            <td class="centered">{%if good.in_stock%}+{%endif%}</td>
         </tr>
-        {% endfor %}
+        {%endfor%}
     </table>
-{% if goods.paginator.num_pages > 1 %}
+
+
+
+{% if paginator.num_pages > 1 %}
     <div id="pagination">
-        {% if goods.has_previous %}
-        <div id="previous-page"><a href="{% url "index" cat_id=category.pk %}?page={{goods.previous_page_number}}">&lt;</a></div>
+        {% if page_obj.has_previous %}
+        <div id="previous-page"><a href="{% url "index" cat_id=category.pk %}?page={{page_obj.previous_page_number}}">&lt;</a></div>
         {%endif%}
-        {%if goods.has_next%}
-            <div id="next-page"><a href="{%url "index" cat_id=category.pk%}?page={{goods.next_page_number}}">&gt;</a></div>
+        {%if page_obj.has_next%}
+            <div id="next-page"><a href="{%url "index" cat_id=category.pk%}?page={{page_obj.next_page_number}}">&gt;</a></div>
         {%endif%}
-        <a id="num-page">
-            {%for pn in goods.paginator.page_range%}
+        <div id="num-page">
+            {%for pn in paginator.page_range%}
                 {%if not forloop.first%}
                     &nbsp;&nbsp;|&nbsp;&nbsp;
             {%endif%}
-            {%if goods.number != pn%}
+            {%if page_obj.number != pn%}
                 <a href="{% url "index" cat_id=category.pk %}?page={{pn}}">
             {%endif%}
                 {{pn}}
-            {% if goods.number != pn %}
-                </a>
+            {% if page_obj.number != pn %}
+        </div>
+
             {%endif%}
             {%endfor%}
         </div>
