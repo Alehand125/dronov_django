@@ -4,20 +4,27 @@ from .models import Category, Good
 from django.http import Http404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.base import ContextMixin
 
 
-# class GoodListView(TemplateView):
-class GoodListView(ListView):
+class CategoryListMixin(ContextMixin):
+    def get_context_data(self, **kwargs):
+        context = super(CategoryListMixin, self).get_context_data(**kwargs)
+        context["cats"] = Category.objects.order_by("name")
+        return context
+
+
+class GoodListView(ListView, CategoryListMixin):
     template_name = "index.html"
     paginate_by = 10
     cat = None
 
-    def get(self,request, *args,**kwargs):
-        if (self.kwargs["cat_id"]==None):
-            self.cat=Category.objects.first()
+    def get(self, request, *args, **kwargs):
+        if (self.kwargs["cat_id"] == None):
+            self.cat = Category.objects.first()
         else:
             self.cat = Category.objects.get(pk=self.kwargs["cat_id"])
-        return super(GoodListView,self).get(request,*args,**kwargs)
+        return super(GoodListView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(GoodListView, self).get_context_data(**kwargs)
@@ -25,7 +32,7 @@ class GoodListView(ListView):
         #     page_num = self.request.GET["page"]
         # except KeyError:
         #     page_num = 1
-        context["cats"] = Category.objects.order_by("name")
+        # context["cats"] = Category.objects.order_by("name")
         context["category"] = self.cat
         # if kwargs["cat_id"] == None:
         #     context["category"] = Category.objects.first()
@@ -43,8 +50,8 @@ class GoodListView(ListView):
     def get_queryset(self):
         return Good.objects.filter(category=self.cat).order_by("name")
 
-# class GoodDetailView(TemplateView):
-class GoodDetailView(DetailView):
+
+class GoodDetailView(DetailView, CategoryListMixin):
     template_name = "good.html"
     model = Good
     pk_url_kwarg = "good_id"
@@ -55,9 +62,5 @@ class GoodDetailView(DetailView):
             context["pn"] = self.request.GET["page"]
         except KeyError:
             context["pn"] = 1
-        context["cats"] = Category.objects.order_by("name")
-        # try:
-        #     context["good"] = Good.objects.get(pk=kwargs["good_id"])
-        # except Good.DoesNotExist:
-        #     raise Http404
+
         return context
